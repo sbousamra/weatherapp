@@ -25,11 +25,11 @@ Learn about REST, HTTP (routes, verbs, query parameters).
 ```yaml
 Weather:
     get:
-        route: /weather/area?days=number
+        route: /weather/location?days=number
 
         parameters:
             days: number of days we are returning weather for
-            area: location of where we want the weather for
+            location: location of where we want the weather for
 
         responses:
             location: location name

@@ -1,8 +1,12 @@
 package sbousamra.weatherapp
 
+import Types._
+
 object WeatherApp {
   def main(args: Array[String]) {
-    println("test")
+    val testClass = WeatherForecastResponse("africa", 2400, 25, 30, 50, 100, "cloudy")
+    val test = encodeJson(testClass).spaces2
+    println(test)
   }
 }
 
@@ -23,5 +27,3 @@ object WeatherApp {
 //def ourResponse(sourceData: Response[JSON]): WeatherForecastResponse = {
 //  ???
 //}
-
-
