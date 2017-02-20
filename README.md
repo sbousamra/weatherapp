@@ -20,3 +20,23 @@ Learn how to use Trello for project management, treating the project like a real
 
 Learn about REST, HTTP (routes, verbs, query parameters).
 
+#Api Specification
+
+```yaml
+Weather:
+    get:
+        route: /weather/area?days=number
+
+        parameters:
+            days: number of days we are returning weather for
+            area: location of where we want the weather for
+
+        responses:
+            location: location name
+            time: current time of request
+            temperature: temperature value
+            precipitation: precipitation value
+            humidity: humidity value
+            wind: wind value
+            forecast: e.g. sunny, mostly sunny, cloudy, storming etc.
+```
