@@ -2,18 +2,15 @@ package sbousamra.weatherapp
 
 import argonaut._
 import Argonaut._
-import org.http4s._
-import org.http4s.dsl._
-import org.http4s.server.{Server, ServerApp}
-import org.http4s.server.blaze.BlazeBuilder
+
 
 import scalaz.concurrent.Task
 
-object Types extends ServerApp {
+object Types {
 
   case class WeatherForecastRequest(days: Int, location: String)
 
-  case class WeatherForecastResponse(
+  case class Weather(
     location: String,
     time: Int,
     temperature: Int,
@@ -23,7 +20,11 @@ object Types extends ServerApp {
     forecast: String
   )
 
-  def encodeJson(response: WeatherForecastResponse): Json = {
+  case class WeatherForecast(day: String, forecast: Weather)
+
+  case class WeatherForecastResponse(days: List[WeatherForecast])
+
+  def encodeWeatherJson(response: Weather): Json = {
     Json(
       "location" := response.location,
       "time" := response.time,
@@ -35,18 +36,25 @@ object Types extends ServerApp {
     )
   }
 
-  def getUrl(location: String, days: Int): String = {
-    "weather/" + location + "/" + days.toString
+//  def getUrl(location: String, days: Int): String = {
+//    "weather/" + location + "/" + days.toString
+//  }
+
+  def getWeatherApi(request: WeatherForecastRequest): WeatherForecastResponse = {
+    val dummyWeather = Weather(request.location, 2400, 35, 10, 20, 30, "sunny")
+    val dummyWeatherForecast = WeatherForecast("monday", dummyWeather)
+    WeatherForecastResponse(List.fill(request.days)(dummyWeatherForecast))
   }
 
-  def getRoute(url: String): HttpService = {
-    HttpService {
-      case GET -> Root / url =>
-        Ok("55 degrees")
-    }
+
+  def encodeWeatherForecastResponseJson(responseFromApi: WeatherForecastResponse): Json = {
+    Json(
+      "days" := responseFromApi.days.map { day =>
+        Json(
+          "day" := day.day,
+          "forecast" := encodeWeatherJson(day.forecast)
+        )
+      }
+    )
   }
-  override def server(args: List[String]): Task[Server] =
-    BlazeBuilder
-    .mountService(getRoute(getUrl("africa", 5)), "/")
-    .start
 }
