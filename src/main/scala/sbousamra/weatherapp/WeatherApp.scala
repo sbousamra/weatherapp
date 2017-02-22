@@ -6,7 +6,6 @@ object WeatherApp {
   def main(args: Array[String]) {
     val testClass = WeatherForecastResponse("africa", 2400, 25, 30, 50, 100, "cloudy")
     val test = encodeJson(testClass).spaces2
-    println(test)
   }
 }
 
