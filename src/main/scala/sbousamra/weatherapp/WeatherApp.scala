@@ -1,13 +1,31 @@
 package sbousamra.weatherapp
 
 import Types._
+import argonaut._
+import org.http4s.HttpService
+import org.http4s.dsl._
+import org.http4s.server.{Server, ServerApp}
+import org.http4s.server.blaze.BlazeBuilder
 
-object WeatherApp {
-  def main(args: Array[String]) {
-    val testClass = WeatherForecastResponse("africa", 2400, 25, 30, 50, 100, "cloudy")
-    val test = encodeJson(testClass).spaces2
-    println(test)
+import scalaz.concurrent.Task
+
+object WeatherApp extends ServerApp {
+
+
+  def getRoute: HttpService = {
+    HttpService {
+      case GET -> Root / location => {
+        val requestToApi = WeatherForecastRequest(3, location)
+        val responseFromApi: WeatherForecastResponse = getWeatherApi(requestToApi)
+        val responseFromApiAsJson: Json = encodeWeatherForecastResponseJson(responseFromApi)
+        Ok(responseFromApiAsJson.spaces2)
+      }
+    }
   }
+  override def server(args: List[String]): Task[Server] =
+    BlazeBuilder
+      .mountService(getRoute, "/")
+      .start
 }
 
 //Pseudocode
