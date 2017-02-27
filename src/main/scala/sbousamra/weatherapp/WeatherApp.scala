@@ -14,7 +14,7 @@ object WeatherApp extends ServerApp {
 
   def getWeatherApi(request: WeatherForecastRequest): Task[String] = {
     val httpClient = PooledHttp1Client()
-    val weatherRequest = httpClient.expect[String]("https://httpbin.org/")
+    val weatherRequest = httpClient.expect[String]("http://pokeapi.co/api/v2/type/")
     weatherRequest
   }
 
