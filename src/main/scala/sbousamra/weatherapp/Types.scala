@@ -40,12 +40,6 @@ object Types {
 //    "weather/" + location + "/" + days.toString
 //  }
 
-  def getWeatherApi(request: WeatherForecastRequest): WeatherForecastResponse = {
-    val dummyWeather = Weather(request.location, 2400, 35, 10, 20, 30, "sunny")
-    val dummyWeatherForecast = WeatherForecast("monday", dummyWeather)
-    WeatherForecastResponse(List.fill(request.days)(dummyWeatherForecast))
-  }
-
 
   def encodeWeatherForecastResponseJson(responseFromApi: WeatherForecastResponse): Json = {
     Json(
