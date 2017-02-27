@@ -7,7 +7,7 @@ import org.http4s.client.blaze.PooledHttp1Client
 import org.http4s.dsl._
 import org.http4s.server.{Server, ServerApp}
 import org.http4s.server.blaze.BlazeBuilder
-import org.http4s.argonaut._
+import org.http4s.argonaut.ArgonautInstances._
 
 import scalaz.concurrent.Task
 
@@ -15,7 +15,7 @@ object WeatherApp extends ServerApp {
 
   def getWeatherApi(request: WeatherForecastRequest): Task[Json] = {
     val httpClient = PooledHttp1Client()
-    val weatherRequest = httpClient.expect[Json]("https://www.metaweather.com/api/location/44418/")(jsonOf)
+    val weatherRequest = httpClient.expect[Json]("https://www.metaweather.com/api/location/44418/")
     weatherRequest
   }
 
