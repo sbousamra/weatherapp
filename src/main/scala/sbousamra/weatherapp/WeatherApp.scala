@@ -1,20 +1,21 @@
 package sbousamra.weatherapp
 
 import Types._
-import argonaut._
+import argonaut._, argonaut.Json
 import org.http4s.HttpService
 import org.http4s.client.blaze.PooledHttp1Client
 import org.http4s.dsl._
 import org.http4s.server.{Server, ServerApp}
 import org.http4s.server.blaze.BlazeBuilder
+import org.http4s.argonaut._
 
 import scalaz.concurrent.Task
 
 object WeatherApp extends ServerApp {
 
-  def getWeatherApi(request: WeatherForecastRequest): Task[String] = {
+  def getWeatherApi(request: WeatherForecastRequest): Task[Json] = {
     val httpClient = PooledHttp1Client()
-    val weatherRequest = httpClient.expect[String]("http://pokeapi.co/api/v2/type/")
+    val weatherRequest = httpClient.expect[Json]("http://weather.yahooapis.com/forecastrss")(jsonOf)
     weatherRequest
   }
 

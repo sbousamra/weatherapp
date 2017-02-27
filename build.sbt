@@ -10,5 +10,7 @@ libraryDependencies ++= Seq(
   "org.http4s"                  %% "http4s-dsl"                     % "0.15.0",
   "org.http4s"                  %% "http4s-blaze-server"            % "0.15.0",
   "org.http4s"                  %% "http4s-blaze-client"            % "0.15.0",
+  "org.http4s"                  %% "http4s-argonaut"                % "0.15.0",
+  "org.http4s"                  %% "http4s-json4s-native"           % "0.15.0",
   "io.argonaut"                 %% "argonaut"                       % "6.1"
 )
