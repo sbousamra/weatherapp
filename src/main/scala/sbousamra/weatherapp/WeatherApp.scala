@@ -15,7 +15,7 @@ object WeatherApp extends ServerApp {
 
   def getWeatherApi(request: WeatherForecastRequest): Task[Json] = {
     val httpClient = PooledHttp1Client()
-    val weatherRequest = httpClient.expect[Json]("http://weather.yahooapis.com/forecastrss")(jsonOf)
+    val weatherRequest = httpClient.expect[Json]("https://www.metaweather.com/api/location/44418/")(jsonOf)
     weatherRequest
   }
 
