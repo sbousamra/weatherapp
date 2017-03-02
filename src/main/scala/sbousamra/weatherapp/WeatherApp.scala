@@ -1,7 +1,7 @@
 package sbousamra.weatherapp
 
 import Types._
-import argonaut.Json
+import argonaut._, Argonaut._
 import org.http4s.{HttpService, Uri}
 import org.http4s.client.blaze.PooledHttp1Client
 import org.http4s.dsl._
@@ -16,19 +16,21 @@ import scalaz.concurrent.Task
 object WeatherApp extends ServerApp {
   val httpClient = PooledHttp1Client()
 
-  def getWeatherApi(request: WeatherForecastRequest, client: Client): Task[Json] = {
+  def getWeatherApi(request: WeatherForecastRequest, client: Client): Task[Weather] = {
     val uri = Uri
       .unsafeFromString("https://query.yahooapis.com/v1/public/yql")
       .withQueryParam("q", s"""select * from weather.forecast where woeid in (select woeid from geo.places(1) where text= "${request.location}")""")
       .withQueryParam("format", "json")
-    httpClient.expect[Json](uri)
+    httpClient.expect[Weather](uri)
   }
 
   def getRoute: HttpService = {
     HttpService {
       case GET -> Root / location => {
-        getWeatherApi(WeatherForecastRequest(1, "brisbane"), httpClient).attempt.flatMap {
-          case \/-(json) => Ok(json.spaces2)
+        getWeatherApi(WeatherForecastRequest("sydney"), httpClient).attempt.flatMap {
+          case \/-(weather) =>
+            val encodedJsonForUser = encodeWeatherJson(weather)
+            Ok(encodedJsonForUser.spaces2)
           case -\/(err) => InternalServerError(err.toString)
         }
       }
