@@ -27,8 +27,11 @@ object WeatherApp extends ServerApp {
   def getRoute: HttpService = {
     HttpService {
       case GET -> Root / location => {
-        getWeatherApi(WeatherForecastRequest(1, "brisbane"), httpClient).attempt.flatMap {
-          case \/-(json) => Ok(json.spaces2)
+        getWeatherApi(WeatherForecastRequest("sydney"), httpClient).attempt.flatMap {
+          case \/-(json) =>
+//            val decodedApiJson = json.as(decodeApiWeatherResponse).toOption.get
+//            val encodedJsonForUser = encodeWeatherJson(decodedApiJson)
+            Ok(json.spaces2)
           case -\/(err) => InternalServerError(err.toString)
         }
       }

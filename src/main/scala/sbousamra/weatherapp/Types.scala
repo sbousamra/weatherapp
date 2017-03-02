@@ -8,47 +8,35 @@ import scalaz.concurrent.Task
 
 object Types {
 
-  case class WeatherForecastRequest(days: Int, location: String)
+  case class WeatherForecastRequest(location: String)
 
   case class Weather(
-    location: String,
-    time: Int,
-    temperature: Int,
-    precipitation: Int,
-    humidity: Int,
-    wind: Int,
-    forecast: String
+    location: List[String],
+    atmosphere: List[String],
+    astronomy: List[String],
+    wind: List[String],
+    forecast: List[String]
   )
 
-  case class WeatherForecast(day: String, forecast: Weather)
-
-  case class WeatherForecastResponse(days: List[WeatherForecast])
+  def decodeApiWeatherResponse: DecodeJson[Weather] = {
+    DecodeJson {
+      h  => for {
+        location <- h.get[List[String]]("results")
+        atmosphere <- h.get[List[String]]("atmosphere")
+        astronomy <- h.get[List[String]]("astronomy")
+        wind <- h.get[List[String]]("wind")
+        forecast <- h.get[List[String]]("forecast")
+      } yield Weather(location, atmosphere, astronomy, wind, forecast)
+    }
+  }
 
   def encodeWeatherJson(response: Weather): Json = {
     Json(
       "location" := response.location,
-      "time" := response.time,
-      "temperature" := response.temperature,
-      "precipitation" := response.precipitation,
-      "humidity" := response.humidity,
+      "atmosphere" := response.atmosphere,
+      "astronomy" := response.astronomy,
       "wind" := response.wind,
       "forecast" := response.forecast
-    )
-  }
-
-//  def getUrl(location: String, days: Int): String = {
-//    "weather/" + location + "/" + days.toString
-//  }
-
-
-  def encodeWeatherForecastResponseJson(responseFromApi: WeatherForecastResponse): Json = {
-    Json(
-      "days" := responseFromApi.days.map { day =>
-        Json(
-          "day" := day.day,
-          "forecast" := encodeWeatherJson(day.forecast)
-        )
-      }
     )
   }
 }
