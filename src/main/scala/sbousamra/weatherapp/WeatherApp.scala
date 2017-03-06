@@ -45,7 +45,7 @@ object WeatherApp extends ServerApp {
     println(s"Im running on $getPort dyno ${System.getenv("DYNO")}")
     BlazeBuilder
       .mountService(getRoute, "/")
-      .bindHttp(getPort)
+      .bindHttp(getPort, "0.0.0.0")
       .start
   }
 }
