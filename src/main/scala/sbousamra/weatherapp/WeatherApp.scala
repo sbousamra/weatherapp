@@ -37,10 +37,17 @@ object WeatherApp extends ServerApp {
     }
   }
 
-  override def server(args: List[String]): Task[Server] =
+  def getPort: Int = {
+    Option(System.getenv("PORT")).map(v => v.toInt).getOrElse(8080)
+  }
+
+  override def server(args: List[String]): Task[Server] = {
+    println(s"Im running on $getPort dyno ${System.getenv("DYNO")}")
     BlazeBuilder
       .mountService(getRoute, "/")
+      .bindHttp(getPort)
       .start
+  }
 }
 
 //Pseudocode
