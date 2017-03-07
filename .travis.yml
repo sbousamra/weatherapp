@@ -1,10 +1,6 @@
 language: scala
 scala:
 - 2.11.8
-
-travis encrypt $(heroku auth:token) --add deploy.api_key
-
 deploy:
-  provider: heroku
   api_key:
-    secure: "YOUR ENCRYPTED API KEY"
+    secure: GTOunyhaC2RTG6fxaZXgRkULwM/nQtDTmXzH2K4TPhnFU/7JeN91ZQ6HwvgiEzbtxRbPjzK1M9JUww5j554qTEzBSEqLUAIGiLYGH+Z2nx1F8I3wLd1+Md6H0yNIyNOqcwZg88hoUq7/RBUrcNYq7WGk2hSjNRx1QYJ5SavZqSP86zC/Pe1hy7NAPWKo53tCjoMITHHyZHsJETYFEn8AS1ninfJ09bSeii5Fm0B5z1f8HQ2D3YhfliuNbwXEP6kzDcgHCl94Gbd4SsKVufM3DC4+48yruEIE9SETiELWOuZDK2iulj0tg69nwoFMMcDPEHMeI8kR2Myz0MnM32A8dmOx3T/lc7QBHyrpWNi4TfP29nJW5Ef7iqllWE6WduOVqXf9inn0Qs633VmruZ//tFhAA1lZ3kd+7p53YROyqH4c8t8WxcikZjdazbvuSXEZRQ4QWsVA+HS7a/j6p8DwLUSH2P/+Pyzc7nKGABM18M8+7Hu+CL+DtDqQVQOt4usRjen9viusBdm6IN6mmRlnnbNZq2RvLvQqRSi8f5PAgZxTrxqeOyaCX9DQHjc7XY7nD1Garc3s+HMBunTDDJ2nTAk7cMT/1HIOLRcdi/gTTbTLS3Tw8XLRTlWGaXXOyPpZou7zxjySmFPqaTOvqQAZ3EjS7QRMM8vQeHcclwZbIk8=
