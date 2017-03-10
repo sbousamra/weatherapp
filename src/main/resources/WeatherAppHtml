@@ -2,8 +2,10 @@
 <html>
 <body>
 
-<h1>My first heading</h1>
-<p>My first paragraph.</p>
+<h1>Welcome to Bass's Weather App</h1>
+<p>This application will allow your to find all the information you could want about the weather in a location of your choice.
+    Just enter in your location in the search bar and enjoy!
+</p>
 
 </body>
 </html>

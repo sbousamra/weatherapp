@@ -1,9 +1,11 @@
 package sbousamra.weatherapp
 
+import java.io.File
+
 import Types._
 import argonaut._
 import Argonaut._
-import org.http4s.{HttpService, Uri}
+import org.http4s.{HttpService, Response, StaticFile, Uri}
 import org.http4s.client.blaze.PooledHttp1Client
 import org.http4s.dsl._
 import org.http4s.server.{Server, ServerApp}
@@ -26,16 +28,24 @@ object WeatherApp extends ServerApp {
     httpClient.expect[Weather](uri)
   }
 
-  def getRoute: HttpService = {
+  def getRootRoute: HttpService = {
+    HttpService {
+      case GET -> Root => {
+        val sampleHtml = StaticFile.fromFile(new File("/Users/bass/Code/scala/weatherapp-scala/src/main/resources/WeatherAppHtml"))
+        sampleHtml
+          .map(Task.now)
+          .getOrElse(NotFound())
+      }
+    }
+  }
+
+  def getLocationRoute: HttpService = {
     HttpService {
       case GET -> Root / location => {
         getWeatherApi(WeatherForecastRequest(s"$location"), httpClient).attempt.flatMap {
           case \/-(weather) =>
             val encodedJsonForUser = encodeWeatherJson(weather)
-            val sampleHtml = for (line <- Source.fromFile("/Users/bass/Code/scala/weatherapp-scala/src/main/resources/WeatherAppHtml").getLines()) {
-              println(line)
-            }
-            Ok(sampleHtml)
+            Ok(encodedJsonForUser.spaces2)
           case -\/(err) => InternalServerError(err.toString)
         }
       }
@@ -49,7 +59,8 @@ object WeatherApp extends ServerApp {
   override def server(args: List[String]): Task[Server] = {
     println(s"Im running on $getPort dyno ${System.getenv("DYNO")}")
     BlazeBuilder
-      .mountService(getRoute, "/")
+      .mountService(getRootRoute, "/")
+      .mountService(getLocationRoute, "/")
       .bindHttp(getPort, "0.0.0.0")
       .start
   }
