@@ -5,7 +5,7 @@ import java.io.File
 import Types._
 import argonaut._
 import Argonaut._
-import org.http4s.{HttpService, Response, StaticFile, Uri}
+import org.http4s._
 import org.http4s.client.blaze.PooledHttp1Client
 import org.http4s.dsl._
 import org.http4s.server.{Server, ServerApp}
@@ -16,6 +16,8 @@ import org.http4s.client.Client
 import scala.io.Source
 import scalaz.{-\/, \/-}
 import scalaz.concurrent.Task
+
+
 
 object WeatherApp extends ServerApp {
   val httpClient = PooledHttp1Client()
@@ -28,26 +30,21 @@ object WeatherApp extends ServerApp {
     httpClient.expect[Weather](uri)
   }
 
-  def getRootRoute: HttpService = {
+  val weatherService: HttpService = {
     HttpService {
-      case GET -> Root => {
-        val sampleHtml = StaticFile.fromFile(new File("/Users/bass/Code/scala/weatherapp-scala/src/main/resources/WeatherAppHtml"))
-        sampleHtml
-          .map(Task.now)
-          .getOrElse(NotFound())
-      }
-    }
-  }
-
-  def getLocationRoute: HttpService = {
-    HttpService {
-      case GET -> Root / location => {
+      case GET -> Root / "weather" / location => {
         getWeatherApi(WeatherForecastRequest(s"$location"), httpClient).attempt.flatMap {
           case \/-(weather) =>
             val encodedJsonForUser = encodeWeatherJson(weather)
-            Ok(encodedJsonForUser.spaces2)
+            Ok(encodedJsonForUser)
           case -\/(err) => InternalServerError(err.toString)
         }
+      }
+
+      case GET -> Root => {
+        val file = new File("src/main/resources/WeatherAppHtml.html")
+        val html = Source.fromFile(file).mkString
+        Ok(html).map (response => response.putHeaders(Header("Content-Type", "video/mp4; charset=UTF-8")))
       }
     }
   }
@@ -59,8 +56,7 @@ object WeatherApp extends ServerApp {
   override def server(args: List[String]): Task[Server] = {
     println(s"Im running on $getPort dyno ${System.getenv("DYNO")}")
     BlazeBuilder
-      .mountService(getRootRoute, "/")
-      .mountService(getLocationRoute, "/")
+      .mountService(weatherService, "/")
       .bindHttp(getPort, "0.0.0.0")
       .start
   }
