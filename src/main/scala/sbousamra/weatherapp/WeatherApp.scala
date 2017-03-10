@@ -1,7 +1,8 @@
 package sbousamra.weatherapp
 
 import Types._
-import argonaut._, Argonaut._
+import argonaut._
+import Argonaut._
 import org.http4s.{HttpService, Uri}
 import org.http4s.client.blaze.PooledHttp1Client
 import org.http4s.dsl._
@@ -10,6 +11,7 @@ import org.http4s.server.blaze.BlazeBuilder
 import org.http4s.argonaut._
 import org.http4s.client.Client
 
+import scala.io.Source
 import scalaz.{-\/, \/-}
 import scalaz.concurrent.Task
 
@@ -30,7 +32,10 @@ object WeatherApp extends ServerApp {
         getWeatherApi(WeatherForecastRequest(s"$location"), httpClient).attempt.flatMap {
           case \/-(weather) =>
             val encodedJsonForUser = encodeWeatherJson(weather)
-            Ok(encodedJsonForUser.spaces2)
+            val sampleHtml = for (line <- Source.fromFile("/Users/bass/Code/scala/weatherapp-scala/src/main/resources/WeatherAppHtml").getLines()) {
+              println(line)
+            }
+            Ok(sampleHtml)
           case -\/(err) => InternalServerError(err.toString)
         }
       }
