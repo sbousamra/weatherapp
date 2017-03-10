@@ -44,7 +44,7 @@ object WeatherApp extends ServerApp {
       case GET -> Root => {
         val file = new File("src/main/resources/WeatherAppHtml.html")
         val html = Source.fromFile(file).mkString
-        Ok(html).map (response => response.putHeaders(Header("Content-Type", "video/mp4; charset=UTF-8")))
+        Ok(html).map (response => response.putHeaders(Header("Content-Type", "text/html; charset=UTF-8")))
       }
     }
   }
