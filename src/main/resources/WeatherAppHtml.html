@@ -19,7 +19,7 @@
 <script>
     function handleSearchRequest() {
         var searchInput = document.getElementById("searchBar").value;
-        window.location.assign("https://weatherapp-scala.herokuapp.com/weather/" + searchInput)
+        location.assign(location.origin + "/weather/" + searchInput)
         alert("Successfully requested your weather information")
     }
 </script>
