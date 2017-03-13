@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <h1>Welcome to Bass's Weather App</h1>
 <p id="title">
@@ -14,18 +15,14 @@
 
 <input type="search" id="searchBar" placeholder="Search for your location">
 
-<button onclick="locationSearchBar()">Search</button>
+<button onclick="handleSearchRequest()">Search</button>
 
 <script>
-    function locationSearchAlert(input) {
-        alert(input)
-    }
-
-    function locationSearchBar() {
+    function handleSearchRequest() {
         var searchInput = document.getElementById("searchBar").value;
-        locationSearchAlert(searchInput)
+        window.location.assign("http://localhost:8080/weather/" + searchInput)
+        alert("Successfully requested your weather information")
     }
 </script>
-
 </body>
 </html>
