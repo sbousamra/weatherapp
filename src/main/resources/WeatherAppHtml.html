@@ -12,14 +12,18 @@
     Enter the location you'd like to find the weather for.
 </p>
 
-<form id="location form" action="/weather/">
-    Location: <input type="text" name="Location">
-    <input type="button" onclick="locationSearch()" value="Search">
-</form>
+<p id="location request"></p>
+
+<button onclick="locationSearch()">Enter your location</button>
 
 <script>
     function locationSearch() {
-    document.getElementById("location form").submit();
+        var locationPrompt = prompt("Please enter your location")
+
+        if (locationPrompt != null) {
+            document.getElementById("location request").innerHTML =
+            locationPrompt
+        }
     }
 </script>
 
