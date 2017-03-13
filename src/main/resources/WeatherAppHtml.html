@@ -12,18 +12,18 @@
     Enter the location you'd like to find the weather for.
 </p>
 
-<p id="location request"></p>
+<input type="search" id="searchBar" placeholder="Search for your location">
 
-<button onclick="locationSearch()">Enter your location</button>
+<button onclick="locationSearchBar()">Search</button>
 
 <script>
-    function locationSearch() {
-        var locationPrompt = prompt("Please enter your location")
+    function locationSearchAlert(input) {
+        alert(input)
+    }
 
-        if (locationPrompt != null) {
-            document.getElementById("location request").innerHTML =
-            locationPrompt
-        }
+    function locationSearchBar() {
+        var searchInput = document.getElementById("searchBar").value;
+        locationSearchAlert(searchInput)
     }
 </script>
 
