@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <h1>Welcome to Bass's Weather App</h1>
 <p id="title">
@@ -20,7 +19,7 @@
 <script>
     function handleSearchRequest() {
         var searchInput = document.getElementById("searchBar").value;
-        window.location.assign("http://localhost:8080/weather/" + searchInput)
+        window.location.assign("https://weatherapp-scala.herokuapp.com/weather/" + searchInput)
         alert("Successfully requested your weather information")
     }
 </script>
