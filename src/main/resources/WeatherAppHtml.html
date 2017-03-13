@@ -3,9 +3,25 @@
 <body>
 
 <h1>Welcome to Bass's Weather App</h1>
-<p>This application will allow your to find all the information you could want about the weather in a location of your choice.
+<p id="title">
+    This application will allow your to find all the information you could want about the weather in a location of your choice.
     Just enter in your location in the search bar and enjoy!
 </p>
+
+<p id="location search">
+    Enter the location you'd like to find the weather for.
+</p>
+
+<form id="location form" action="/weather/">
+    Location: <input type="text" name="Location">
+    <input type="button" onclick="locationSearch()" value="Search">
+</form>
+
+<script>
+    function locationSearch() {
+    document.getElementById("location form").submit();
+    }
+</script>
 
 </body>
 </html>
