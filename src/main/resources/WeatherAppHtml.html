@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
 
 <h1>Welcome to Bass's Weather App</h1>
 <p id="title">
@@ -21,15 +22,20 @@
 <script>
     function handleSearchRequest() {
         var searchInput = document.getElementById("searchBar").value;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("search results").innerHTML = this.responseText;
-            }
+        $.ajax({
+        type: "GET",
+        url: location.origin + "/weather/" + searchInput,
+        cache: false,
+        success: function(data){
+            document.getElementById("search results").innerHTML = data;
+            alert("Successfully requested your weather information");
+        },
+        error: function(request, error) {
+            alert("Not a valid location");
+            document.getElementById("search results").innerHTML = "Not a valid location"
+
         }
-        xhttp.open("GET", location.origin + "/weather/" + searchInput, true);
-        xhttp.send();
-        alert("Successfully requested your weather information")
+        });
     }
 </script>
 </body>
