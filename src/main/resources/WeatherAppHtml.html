@@ -16,10 +16,19 @@
 
 <button onclick="handleSearchRequest()">Search</button>
 
+<p id="search results"></p>
+
 <script>
     function handleSearchRequest() {
         var searchInput = document.getElementById("searchBar").value;
-        location.assign(location.origin + "/weather/" + searchInput)
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("search results").innerHTML = this.responseText;
+            }
+        }
+        xhttp.open("GET", location.origin + "/weather/" + searchInput, true);
+        xhttp.send();
         alert("Successfully requested your weather information")
     }
 </script>

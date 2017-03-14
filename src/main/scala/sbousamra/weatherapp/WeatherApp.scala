@@ -36,7 +36,7 @@ object WeatherApp extends ServerApp {
         getWeatherApi(WeatherForecastRequest(s"$location"), httpClient).attempt.flatMap {
           case \/-(weather) =>
             val encodedJsonForUser = encodeWeatherJson(weather)
-            Ok(encodedJsonForUser)
+            Ok(encodedJsonForUser.spaces2)
           case -\/(err) => InternalServerError(err.toString)
         }
       }
