@@ -23,18 +23,15 @@
     function handleSearchRequest() {
         var searchInput = document.getElementById("searchBar").value;
         $.ajax({
-        type: "GET",
-        url: location.origin + "/weather/" + searchInput,
-        cache: false,
-        success: function(data){
-            document.getElementById("search results").innerHTML = data;
-            alert("Successfully requested your weather information");
-        },
-        error: function(request, error) {
-            alert("Not a valid location");
-            document.getElementById("search results").innerHTML = "Not a valid location"
-
-        }
+            type: "GET",
+            url: location.origin + "/weather/" + searchInput,
+            cache: false,
+            success: function(data){
+                document.getElementById("search results").innerHTML = data;
+            },
+            error: function(request, error) {
+                document.getElementById("search results").innerHTML = "Not a valid location";
+            }
         });
     }
 </script>
