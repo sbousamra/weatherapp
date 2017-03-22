@@ -28,12 +28,30 @@
             var forecastFormatting = forecastJson.map(function(result) {
                 return "Day: " + result.day + "</br>"
                  + "Date: " + result.date + "</br>"
-                 + "<img src=http://i.imgur.com/MpDkUel.jpg alt=Blizzard height=42 width=42>" + "</br>"
+                 + handleImage(result) + "</br>"
                  + "High: " + result.high
                  + ", Low: " + result.low
                  + ", Conditions: " + result.text
             })
             return "<h3>" + forecastFormatting[0] + "<br/>" + "<hr>" + forecastFormatting.slice(1, forecastFormatting.length).join("<br/>") + "</h3>"
+        }
+
+        function handleImage(result) {
+            if (result.text == "Sunny") {
+                return "<img src=http://i.imgur.com/ekngZ2B.jpg alt=sunny height=100 width=100>"
+            } else if (result.text == "Thunderstorms") {
+                return "<img src=http://i.imgur.com/3K5OXfF.jpg alt=thunderstorms height=100 width=100>"
+            } else if (result.text == "Severe Thunderstorms") {
+                return "<img src=http://i.imgur.com/Hma2Pef.jpg alt=severethunderstorms height=100 width=100>"
+            } else if (result.text == "Snow") {
+                return "<img src=http://i.imgur.com/GepGojL.jpg alt=snow height=100 width=100>"
+            } else if (result.text == "Cloudy") {
+                return "<img src=http://i.imgur.com/9jpKwrw.jpg alt=cloudy height=100 width=100>"
+            } else if (result.text == "Showers") {
+                return "<img src=http://i.imgur.com/hZk0FcA.jpg alt=showers height=100 width=100>"
+            } else {
+                return "<img src=http://i3.kym-cdn.com/photos/images/newsfeed/000/925/494/218.png_large alt=notsure height=100 width=100>"
+            }
         }
 
     </script>
