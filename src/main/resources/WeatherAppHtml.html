@@ -25,14 +25,15 @@
 
         function getForecastHtml(forecastJson) {
             console.log(forecastJson);
-            return "<h4>" + forecastJson.map(function(result) {
-                return "Date: " + result.date
-                 + ", Day: " + result.day
-                 + ", High: " + result.high
+            var forecastFormatting = forecastJson.map(function(result) {
+                return "Day: " + result.day + "</br>"
+                 + "Date: " + result.date + "</br>"
+                 + "<img src=http://i.imgur.com/MpDkUel.jpg alt=Blizzard height=42 width=42>" + "</br>"
+                 + "High: " + result.high
                  + ", Low: " + result.low
-                 + ", Conditions " + result.text
-                 + "<br/>"
-            }).join("") + "</h4>"
+                 + ", Conditions: " + result.text
+            })
+            return "<h3>" + forecastFormatting[0] + "<br/>" + "<hr>" + forecastFormatting.slice(1, forecastFormatting.length).join("<br/>") + "</h3>"
         }
 
     </script>
