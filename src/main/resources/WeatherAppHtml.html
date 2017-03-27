@@ -11,14 +11,16 @@
                 cache: false,
                 dataType: "json",
                 success: function(data) {
-                    <!--$("#search-results").html(data);-->
                     var locationDetails = "<h2>" + data.location.city + " - " + data.location.country + " - " + data.location.region + "</h2>";
                     var forecastDetails = getForecastHtml(data.forecast);
+                    $("#search-error").empty()
                     $("#results #location").html(locationDetails);
                     $("#results #forecast").html(forecastDetails);
                 },
                 error: function(request, error) {
-                    document.getElementById("search-results").innerHTML = "Not a valid location";
+                    $("#results #location").empty()
+                    $("#results #forecast").empty()
+                    $("#search-error").html("Not a valid location");
                 }
             });
         }
@@ -26,34 +28,112 @@
         function getForecastHtml(forecastJson) {
             console.log(forecastJson);
             var forecastFormatting = forecastJson.map(function(result) {
+                var imageUrl = handleImage(result)
                 return "Day: " + result.day + "</br>"
                  + "Date: " + result.date + "</br>"
-                 + handleImage(result) + "</br>"
+                 + "<img src=" + imageUrl + " height=100 width=100>" + "</br>"
                  + "High: " + result.high
                  + ", Low: " + result.low
-                 + ", Conditions: " + result.text
+                 + ", Conditions: " + result.text + "<br/>"
             })
             return "<h3>" + forecastFormatting[0] + "<br/>" + "<hr>" + forecastFormatting.slice(1, forecastFormatting.length).join("<br/>") + "</h3>"
         }
 
         function handleImage(result) {
-            if (result.text == "Sunny") {
-                return "<img src=http://i.imgur.com/ekngZ2B.jpg alt=sunny height=100 width=100>"
-            } else if (result.text == "Thunderstorms") {
-                return "<img src=http://i.imgur.com/3K5OXfF.jpg alt=thunderstorms height=100 width=100>"
+            if (result.text == "Tornado") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Tropical Storm") {
+                return "http://i.imgur.com/3K5OXfF.jpg"
+            } else if (result.text == "Hurricane") {
+                return "http://i.imgur.com/3K5OXfF.jpg"
             } else if (result.text == "Severe Thunderstorms") {
-                return "<img src=http://i.imgur.com/Hma2Pef.jpg alt=severethunderstorms height=100 width=100>"
-            } else if (result.text == "Snow") {
-                return "<img src=http://i.imgur.com/GepGojL.jpg alt=snow height=100 width=100>"
-            } else if (result.text == "Cloudy") {
-                return "<img src=http://i.imgur.com/9jpKwrw.jpg alt=cloudy height=100 width=100>"
+                return "http://i.imgur.com/Hma2Pef.jpg"
+            } else if (result.text == "Thunderstorms") {
+                return "http://i.imgur.com/3K5OXfF.jpg"
+            } else if (result.text == "Mixed Rain And Snow") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Mixed Rain And Sleet") {
+                return "http://i.imgur.com/hZk0FcA.jpg"
+            } else if (result.text == "Mixed Snow And Sleet") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Freezing Drizzle") {
+                return "http://i.imgur.com/hZk0FcA.jpg"
+            } else if (result.text == "Drizzle") {
+                return "http://i.imgur.com/hZk0FcA.jpg"
+            } else if (result.text == "Freezing Rain") {
+                return "http://i.imgur.com/hZk0FcA.jpg"
             } else if (result.text == "Showers") {
-                return "<img src=http://i.imgur.com/hZk0FcA.jpg alt=showers height=100 width=100>"
+                return "http://i.imgur.com/hZk0FcA.jpg"
+            } else if (result.text == "Snow Flurries") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Light Snow Showers") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Blowing Snow") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Snow") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Hail") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Sleet") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Dust") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Foggy") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Haze") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Smoky") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Blustery") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Windy") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Cold") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Dust") {
+                return "http://i.imgur.com/MpDkUel.jpg"
+            } else if (result.text == "Cloudy") {
+                return "http://i.imgur.com/9jpKwrw.jpg"
+            } else if (result.text == "Mostly Cloudy (Night)") {
+                return "http://i.imgur.com/W9SmW3N.jpg"
+            } else if (result.text == "Mostly Cloudy (Day)") {
+                return "http://i.imgur.com/9jpKwrw.jpg"
+            } else if (result.text == "Partly Cloudy (Night)") {
+                return "http://i.imgur.com/W9SmW3N.jpg"
+            } else if (result.text == "Partly Cloudy (Day)") {
+                return "http://i.imgur.com/9jpKwrw.jpg"
+            } else if (result.text == "Clear (Night)") {
+                return "http://i.imgur.com/ekngZ2B.jpg"
+            } else if (result.text == "Sunny") {
+                return "http://i.imgur.com/ekngZ2B.jpg"
+            } else if (result.text == "Fair (Night)") {
+                return "http://i.imgur.com/W9SmW3N.jpg"
+            } else if (result.text == "Fair (Day)") {
+                return "http://i.imgur.com/9jpKwrw.jpg"
+            } else if (result.text == "Mixed Rain And Hail") {
+                return "http://i.imgur.com/hZk0FcA.jpg"
+            } else if (result.text == "Hot") {
+                return "http://i.imgur.com/ekngZ2B.jpg"
+            } else if (result.text == "Isolated Thunderstorms") {
+                return "http://i.imgur.com/3K5OXfF.jpg"
+            } else if (result.text == "Scattered Thunderstorms") {
+                return "http://i.imgur.com/3K5OXfF.jpg"
+            } else if (result.text == "Scattered Showers") {
+                return "http://i.imgur.com/hZk0FcA.jpg"
+            } else if (result.text == "Heavy Snow") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Partly Cloudy") {
+                return "http://i.imgur.com/9jpKwrw.jpg"
+            } else if (result.text == "Thundershowers") {
+                return "http://i.imgur.com/hZk0FcA.jpg"
+            } else if (result.text == "Snow Showers") {
+                return "http://i.imgur.com/GepGojL.jpg"
+            } else if (result.text == "Isolated Thundershowers") {
+                return "http://i.imgur.com/hZk0FcA.jpg"
             } else {
-                return "<img src=http://i3.kym-cdn.com/photos/images/newsfeed/000/925/494/218.png_large alt=notsure height=100 width=100>"
+                return "http://i.imgur.com/MpDkUel.jpg"
             }
         }
-
     </script>
 </head>
 <body>
@@ -64,36 +144,11 @@
         Just enter in your location in the search bar and enjoy!
     </p>
 
-    <p>
-        Enter the location you'd like to find the weather for.
-    </p>
-
     <input type="search" id="search-bar" placeholder="Search for your location">
 
     <button onclick="handleSearchRequest()">Search</button>
 
-    <pre id="search-results"></pre>
-
-    <!--<div id="fake-results">-->
-        <!--<hr>-->
-
-        <!--<h1>Sydney - Australia - NSW</h1>-->
-        <!--<h3>Forecast</h3>-->
-        <!--<h4>Monday</h4>-->
-        <!--<p>Thunderstorms - Low: 29 - High: 35</p>-->
-        <!--<h4>Tuesday</h4>-->
-        <!--<p>Thunderstorms - Low: 29 - High: 35</p>-->
-        <!--<h4>Wednesday</h4>-->
-        <!--<p>Thunderstorms - Low: 29 - High: 35</p>-->
-        <!--<h4>Thursday</h4>-->
-        <!--<p>Thunderstorms - Low: 29 - High: 35</p>-->
-        <!--<h4>Friday</h4>-->
-        <!--<p>Thunderstorms - Low: 29 - High: 35</p>-->
-        <!--<h4>Saturday</h4>-->
-        <!--<p>Thunderstorms - Low: 29 - High: 35</p>-->
-        <!--<h4>Sunday</h4>-->
-        <!--<p>Thunderstorms - Low: 29 - High: 35</p>-->
-    <!--</div>-->
+    <div id="search-error"></div>
 
     <div id="results">
         <div id="location">
