@@ -40,96 +40,55 @@
         }
 
         function handleImage(result) {
-            if (result.text == "Tornado") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Tropical Storm") {
-                return "http://i.imgur.com/3K5OXfF.jpg"
-            } else if (result.text == "Hurricane") {
-                return "http://i.imgur.com/3K5OXfF.jpg"
-            } else if (result.text == "Severe Thunderstorms") {
-                return "http://i.imgur.com/Hma2Pef.jpg"
-            } else if (result.text == "Thunderstorms") {
-                return "http://i.imgur.com/3K5OXfF.jpg"
-            } else if (result.text == "Mixed Rain And Snow") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Mixed Rain And Sleet") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
-            } else if (result.text == "Mixed Snow And Sleet") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Freezing Drizzle") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
-            } else if (result.text == "Drizzle") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
-            } else if (result.text == "Freezing Rain") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
-            } else if (result.text == "Showers") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
-            } else if (result.text == "Snow Flurries") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Light Snow Showers") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Blowing Snow") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Snow") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Hail") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Sleet") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Dust") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Foggy") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Haze") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Smoky") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Blustery") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Windy") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Cold") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Dust") {
-                return "http://i.imgur.com/MpDkUel.jpg"
-            } else if (result.text == "Cloudy") {
-                return "http://i.imgur.com/9jpKwrw.jpg"
-            } else if (result.text == "Mostly Cloudy (Night)") {
-                return "http://i.imgur.com/W9SmW3N.jpg"
-            } else if (result.text == "Mostly Cloudy (Day)") {
-                return "http://i.imgur.com/9jpKwrw.jpg"
-            } else if (result.text == "Partly Cloudy (Night)") {
-                return "http://i.imgur.com/W9SmW3N.jpg"
-            } else if (result.text == "Partly Cloudy (Day)") {
-                return "http://i.imgur.com/9jpKwrw.jpg"
-            } else if (result.text == "Clear (Night)") {
-                return "http://i.imgur.com/ekngZ2B.jpg"
-            } else if (result.text == "Sunny") {
-                return "http://i.imgur.com/ekngZ2B.jpg"
-            } else if (result.text == "Fair (Night)") {
-                return "http://i.imgur.com/W9SmW3N.jpg"
-            } else if (result.text == "Fair (Day)") {
-                return "http://i.imgur.com/9jpKwrw.jpg"
-            } else if (result.text == "Mixed Rain And Hail") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
-            } else if (result.text == "Hot") {
-                return "http://i.imgur.com/ekngZ2B.jpg"
-            } else if (result.text == "Isolated Thunderstorms") {
-                return "http://i.imgur.com/3K5OXfF.jpg"
-            } else if (result.text == "Scattered Thunderstorms") {
-                return "http://i.imgur.com/3K5OXfF.jpg"
-            } else if (result.text == "Scattered Showers") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
-            } else if (result.text == "Heavy Snow") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Partly Cloudy") {
-                return "http://i.imgur.com/9jpKwrw.jpg"
-            } else if (result.text == "Thundershowers") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
-            } else if (result.text == "Snow Showers") {
-                return "http://i.imgur.com/GepGojL.jpg"
-            } else if (result.text == "Isolated Thundershowers") {
-                return "http://i.imgur.com/hZk0FcA.jpg"
+            var imageMappings = {
+                "Tornado": "http://i.imgur.com/MpDkUel.jpg",
+                "Tropical Storm": "http://i.imgur.com/3K5OXfF.jpg",
+                "Hurricane": "http://i.imgur.com/3K5OXfF.jpg",
+                "Severe Thunderstorms": "http://i.imgur.com/Hma2Pef.jpg",
+                "Thunderstorms": "http://i.imgur.com/3K5OXfF.jpg",
+                "Mixed Rain And Snow": "http://i.imgur.com/GepGojL.jpg",
+                "Mixed Rain And Sleet": "http://i.imgur.com/hZk0FcA.jpg",
+                "Mixed Snow And Sleet": "http://i.imgur.com/GepGojL.jpg",
+                "Freezing Drizzle": "http://i.imgur.com/hZk0FcA.jpg",
+                "Drizzle": "http://i.imgur.com/hZk0FcA.jpg",
+                "Freezing Rain": "http://i.imgur.com/hZk0FcA.jpg",
+                "Showers": "http://i.imgur.com/hZk0FcA.jpg",
+                "Snow Flurries": "http://i.imgur.com/GepGojL.jpg",
+                "Light Snow Showers": "http://i.imgur.com/GepGojL.jpg",
+                "Blowing Snow": "http://i.imgur.com/GepGojL.jpg",
+                "Snow": "http://i.imgur.com/GepGojL.jpg",
+                "Hail": "http://i.imgur.com/GepGojL.jpg",
+                "Sleet": "http://i.imgur.com/GepGojL.jpg",
+                "Dust": "http://i.imgur.com/MpDkUel.jpg",
+                "Foggy": "http://i.imgur.com/MpDkUel.jpg",
+                "Haze": "http://i.imgur.com/MpDkUel.jpg",
+                "Smoky": "http://i.imgur.com/MpDkUel.jpg",
+                "Blustery": "http://i.imgur.com/MpDkUel.jpg",
+                "Windy": "http://i.imgur.com/MpDkUel.jpg",
+                "Cold": "http://i.imgur.com/MpDkUel.jpg",
+                "Dust": "http://i.imgur.com/MpDkUel.jpg",
+                "Cloudy": "http://i.imgur.com/9jpKwrw.jpg",
+                "Mostly Cloudy (Night)": "http://i.imgur.com/W9SmW3N.jpg",
+                "Mostly Cloudy (Day)": "http://i.imgur.com/9jpKwrw.jpg",
+                "Partly Cloudy (Night)": "http://i.imgur.com/W9SmW3N.jpg",
+                "Partly Cloudy (Day)": "http://i.imgur.com/9jpKwrw.jpg",
+                "Clear (Night)": "http://i.imgur.com/ekngZ2B.jpg",
+                "Sunny": "http://i.imgur.com/ekngZ2B.jpg",
+                "Fair (Night)": "http://i.imgur.com/W9SmW3N.jpg",
+                "Fair (Day)": "http://i.imgur.com/9jpKwrw.jpg",
+                "Mixed Rain And Hail": "http://i.imgur.com/hZk0FcA.jpg",
+                "Hot": "http://i.imgur.com/ekngZ2B.jpg",
+                "Isolated Thunderstorms": "http://i.imgur.com/3K5OXfF.jpg",
+                "Scattered Thunderstorms": "http://i.imgur.com/3K5OXfF.jpg",
+                "Scattered Showers": "http://i.imgur.com/hZk0FcA.jpg",
+                "Heavy Snow": "http://i.imgur.com/GepGojL.jpg",
+                "Partly Cloudy": "http://i.imgur.com/9jpKwrw.jpg",
+                "Thundershowers": "http://i.imgur.com/hZk0FcA.jpg",
+                "Snow Showers": "http://i.imgur.com/GepGojL.jpg",
+                "Isolated Thundershowers": "http://i.imgur.com/hZk0FcA.jpg"
+            }
+            if (imageMappings[result.text] == true) {
+                return imageMappings[result.text]
             } else {
                 return "http://i.imgur.com/MpDkUel.jpg"
             }
